@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <meta
+    name="description"
+    content="Explore Roman Raut's creator-support website and personal portfolio projects."
+  >
+
+  <meta name="theme-color" content="#050506">
+  <title>Projects | Roman Raut</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <style>
+    .project-card {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, #e50914, #ff7a18);
+    }
+
+    .project-card .project-body {
+      padding: 32px;
+    }
+
+    .project-title {
+      margin-top: 18px;
+    }
+
+    .project-description {
+      margin-top: 14px;
+      line-height: 1.75;
+    }
+
+    .project-card .tags {
+      margin-top: 22px;
+    }
+
+    .project-card .project-link {
+      display: inline-flex;
+      margin-top: 26px;
+    }
+
+    @media (max-width: 640px) {
+      .project-card .project-body {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+
+<body data-page="projects">
+
+<a class="skip-link" href="#main-content">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav-shell">
+
+    <a class="brand" href="index.html" aria-label="Roman Raut home">
+      <span class="brand-mark">RR</span>
+
+      <span class="brand-name">
+        ROMAN <span>RAUT</span>
+      </span>
+    </a>
+
+    <button
+      class="menu-button"
+      type="button"
+      aria-label="Open navigation"
+      aria-expanded="false"
+    >
+      <span></span>
+    </button>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="index.html" data-nav="home">Home</a>
+
+      <a
+        href="projects.html"
+        data-nav="projects"
+        aria-current="page"
+      >
+        Projects
+      </a>
+
+      <a href="about.html" data-nav="about">About</a>
+
+      <a
+        href="romancv.pdf"
+        target="_blank"
+        rel="noreferrer"
+      >
+        CV
+      </a>
+
+      <a
+        href="contact.html"
+        data-nav="contact"
+        class="nav-cta"
+      >
+        Contact
+      </a>
+    </nav>
+
+  </div>
+</header>
+
+<main id="main-content">
+
+  <section class="page-hero">
+    <div class="container page-hero-grid">
+
+      <div class="reveal">
+        <div class="eyebrow">My projects</div>
+
+        <h1 class="display-title">
+          Practical projects built through
+          <span class="accent">learning and practice.</span>
+        </h1>
+      </div>
+
+      <p class="page-hero-note reveal">
+        These projects represent my current experience in web development.
+        Each project includes a short description and a direct link to GitHub.
+      </p>
+
+    </div>
+  </section>
+
+  <section class="section-tight">
+    <div class="container">
+
+      <div class="project-grid">
+
+        <!-- CONTRIBUTION WEBSITE -->
+        <article class="project-card reveal">
+          <div class="project-body">
+
+            <div class="project-meta">
+              <span>Web Development</span>
+              <span>Completed</span>
+            </div>
+
+            <h2 class="project-title">
+              Creator Support Website
+            </h2>
+
+            <p class="project-description">
+              A responsive website where viewers can financially support
+              my educational content. It provides a simple interface for
+              subscribers who want to support the Gyanwalla YouTube channel.
+            </p>
+
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Responsive Design</span>
+            </div>
+
+            <a
+              class="project-link"
+              href="https://github.com/meromanraut/Contribution-"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on GitHub <span>→</span>
+            </a>
+            <a
+              class="project-link"
+              href="https://contributionforme.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visit Website <span>→</span>
+            </a>
+
+          </div>
+        </article>
+
+        <!-- PERSONAL PORTFOLIO -->
+        <article class="project-card reveal">
+          <div class="project-body">
+
+            <div class="project-meta">
+              <span>Personal Project</span>
+              <span>In Progress</span>
+            </div>
+
+            <h2 class="project-title">
+              Personal Portfolio Website
+            </h2>
+
+            <p class="project-description">
+              A personal portfolio designed to present my education,
+              technical skills, projects, experience, CV, and current
+              learning journey in a clear and professional way.
+            </p>
+
+            <div class="tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Portfolio</span>
+            </div>
+
+            <a
+              class="project-link"
+              href="https://github.com/meromanraut/Contribution-"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View on GitHub <span>→</span>
+            </a>
+            <a
+              class="project-link"
+              href="https://contributionforme.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Visit Website <span>→</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+
+      <div class="cta-band reveal">
+
+        <div>
+          <h2>More projects are coming.</h2>
+
+          <p>
+            I am continuing to improve my programming and web-development
+            skills by building practical projects and sharing my progress
+            on GitHub.
+          </p>
+        </div>
+
+        <a
+          class="button"
+          href="https://github.com/meromanraut"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Visit GitHub
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+
+    <div class="footer-grid">
+
+      <div>
+        <a class="brand" href="index.html">
+          <span class="brand-mark">RR</span>
+
+          <span class="brand-name">
+            ROMAN <span>RAUT</span>
+          </span>
+        </a>
+
+        <p style="margin-top:16px;max-width:420px">
+          BSc CSIT student building practical skills in programming
+          and web development while exploring artificial intelligence
+          and machine learning.
+        </p>
+
+        <div class="social-links">
+
+          <a
+            href="https://github.com/meromanraut"
+            target="_blank"
+            rel="noreferrer"
+          >
+            GitHub
+          </a>
+
+          <a
+            href="https://www.linkedin.com/in/meromanraut/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>
+
+          <a href="mailto:romanraut321@gmail.com">
+            Email
+          </a>
+                   <a href="https://www.youtube.com/@GYAN_WALLA">Youtube</a>
+
+
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-title">Explore</div>
+
+        <div class="footer-links">
+          <a href="projects.html">Projects</a>
+          <a href="about.html">About me</a>
+
+          <a
+            href="romancv.pdf"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View CV
+          </a>
+
+          <a href="contact.html">Contact</a>
+        </div>
+      </div>
+
+      <div>
+        <div class="footer-title">Currently</div>
+
+        <div class="footer-links">
+          <span>Learning Django and Node.js</span>
+          <span>Improving web-development skills</span>
+          <span>Exploring AI and machine learning</span>
+
+          <a
+            href="https://github.com/meromanraut"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Publishing on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>
+        © <span data-current-year></span> Roman Raut.
+      </span>
+
+      <span>
+        Designed and built with HTML, CSS, and JavaScript.
+      </span>
+    </div>
+
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>

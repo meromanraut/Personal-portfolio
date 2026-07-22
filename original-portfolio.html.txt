@@ -1,0 +1,1190 @@
+"<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Roman Raut | AI & ML Explorer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-main: #050507;
+      --bg-elevated: #111113;
+      --bg-card: #141417;
+      --accent: #e50914;
+      --accent-soft: #f9433d;
+      --text-main: #ffffff;
+      --text-muted: #b3b3c0;
+      --radius-lg: 1.2rem;
+      --radius-md: 0.9rem;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+ body {
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #050507;
+  color: var(--text-main);
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+/* === CINEMATIC MOVING BACKGROUND === */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -20%;
+  background:
+    radial-gradient(circle at 10% 0%, rgba(229, 9, 20, 0.26), transparent 55%),
+    radial-gradient(circle at 80% 10%, rgba(244, 63, 94, 0.18), transparent 60%),
+    radial-gradient(circle at 10% 90%, rgba(14, 165, 233, 0.16), transparent 55%),
+    radial-gradient(circle at 100% 100%, rgba(0, 0, 0, 1), #050507);
+  opacity: 0.9;
+  z-index: -1;
+  animation: bgDrift 26s ease-in-out infinite alternate;
+}
+/* subtle grain / fog layer for extra depth */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.7));
+  mix-blend-mode: soft-light;
+  opacity: 0.7;
+  z-index: -1;
+}
+/* keyframes for slow background movement */
+@keyframes bgDrift {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(-20px, -40px, 0) scale(1.05);
+  }
+  100% {
+    transform: translate3d(30px, 20px, 0) scale(1.08);
+  }
+}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+    img {
+      max-width: 100%;
+      display: block;
+    }
+    /* ---------- LAYOUT HELPERS ---------- */
+        .container {
+      width: 100%;
+      max-width: 1400px;   /* was 1120px */
+      margin: 0 auto;
+      padding: 0 2.5rem;   /* a bit wider content */
+    }
+    
+    .section {
+      padding: 4.5rem 0 3.5rem;
+    }
+    .section-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.4rem;
+    }
+    .section-title span {
+      color: var(--accent);
+    }
+    .section-subtitle {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 580px;
+      margin-bottom: 2rem;
+    }
+    /* ---------- NAVBAR ---------- */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: linear-gradient(to bottom, rgba(5, 5, 7, 0.98), rgba(5, 5, 7, 0.8), transparent);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    }
+    .navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 2.5rem;   /* match container padding */
+  max-width: 1400px;        /* match container width */
+  width: 100%;
+  margin: 0 auto;
+}
+    
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+    .brand-logo {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: conic-gradient(from 210deg, #f97316, #e11d48, #0ea5e9, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .brand-logo::after {
+      content: "";
+      width: 60%;
+      height: 60%;
+      border-radius: 999px;
+      background: #050507;
+      opacity: 0.85;
+    }
+    .brand span:last-child {
+      color: var(--accent);
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.6rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+    .nav-links a {
+      position: relative;
+      padding-bottom: 0.15rem;
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width 0.18s ease;
+    }
+    .nav-links a:hover {
+      color: var(--text-main);
+    }
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+    @media (max-width: 720px) {
+      .nav-links {
+        display: none; /* keep it simple for now */
+      }
+    }
+/* ---------- HERO ---------- */
+    .hero {
+      padding: 4.5rem 0 3rem;
+    }
+    .hero-inner {
+      display: grid;
+      gap: 3rem;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      align-items: center;
+    }
+    @media (max-width: 800px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+    .hero-kicker {
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+    .hero-title {
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      font-weight: 800;
+      margin-bottom: 0.3rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .hero-role {
+      font-size: 1.05rem;
+      margin-bottom: 1.5rem;
+    }
+    .hero-role span {
+      color: var(--accent);
+    }
+    .hero-description {
+      font-size: 0.98rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.4rem;
+    }
+    .btn {
+      border-radius: 999px;
+      padding: 0.75rem 1.7rem;
+      border: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+        background 0.15s ease, border-color 0.15s ease;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: var(--text-main);
+      box-shadow: 0 1rem 2.2rem rgba(229, 9, 20, 0.5);
+    }
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 1.3rem 2.4rem rgba(229, 9, 20, 0.7);
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1.4px solid rgba(255, 255, 255, 0.7);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .hero-scroll {
+      font-size: 1.1rem;
+      opacity: 0.5;
+    }
+    .hero-card {
+      background: radial-gradient(circle at top, #202026 0, #101015 60%);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 1.8rem 3.3rem rgba(0, 0, 0, 0.7);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at top right, rgba(244, 63, 94, 0.45), transparent 60%);
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .hero-card-inner {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-card-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .hero-avatar {
+      width: 54px;
+      height: 54px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, #f97316, #e11d48, #0ea5e9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 1.6rem;
+    }
+    .hero-card-name {
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+    .hero-card-role {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      font-size: 0.8rem;
+      margin-top: 1.4rem;
+    }
+    .stat {
+      padding: 0.7rem 0.75rem;
+      border-radius: 0.8rem;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      text-align: left;
+    }
+    .stat span:first-child {
+      display: block;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+    .stat span:last-child {
+      color: var(--text-muted);
+      font-size: 0.76rem;
+    }
+    @media (max-width: 480px) {
+      .hero-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    .hero-photo-wrapper {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: 0 1.4rem 2.8rem rgba(0, 0, 0, 0.6);
+      margin-bottom: 1.2rem;
+    }
+    /* ---------- PROJECTS ---------- */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.6rem;
+    }
+    @media (max-width: 960px) {
+      .projects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .project-card {
+      background: linear-gradient(to bottom, #18181c, #121214);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 1.4rem 2.8rem rgba(0, 0, 0, 0.5);
+      transform-origin: center;
+      transition: transform 0.15s ease, box-shadow 0.15s ease,
+        border-color 0.15s ease;
+    }
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 1.8rem 3.2rem rgba(0, 0, 0, 0.7);
+      border-color: rgba(229, 9, 20, 0.86);
+    }
+    .project-image-wrapper {
+      position: relative;
+      overflow: hidden;
+      height: 190px;
+    }
+    .project-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(1.1);
+      transform: scale(1.02);
+      transition: transform 0.3s ease;
+    }
+    .project-card:hover .project-image {
+      transform: scale(1.06);
+    }
+    .project-badge {
+      position: absolute;
+      top: 0.8rem;
+      right: 0.9rem;
+      padding: 0.22rem 0.6rem;
+      border-radius: 999px;
+      background: var(--accent);
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+    .project-body {
+      padding: 1rem 1.1rem 1.1rem;
+    }
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 0.4rem;
+    }
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+    }
+    .project-year {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+    .project-description {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.72rem;
+    }
+    .project-tag {
+      padding: 0.22rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    /* ---------- ABOUT ---------- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 2fr);
+      gap: 2.8rem;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .about-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .about-image-wrapper {
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 1.8rem 3.5rem rgba(0, 0, 0, 0.6);
+    }
+    .about-text {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 1.8rem;
+    }
+    .about-text strong {
+      color: var(--text-main);
+    }
+    .about-stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+      max-width: 520px;
+    }
+    @media (max-width: 640px) {
+      .about-stats-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    .about-stat-card {
+      background: var(--bg-card);
+      border-radius: 0.9rem;
+      padding: 0.85rem 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      font-size: 0.78rem;
+    }
+    .about-stat-number {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 0.15rem;
+    }
+    .about-stat-label {
+      color: var(--text-muted);
+    }
+    /* ---------- SKILLS ---------- */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.6rem;
+    }
+    @media (max-width: 960px) {
+      .skills-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
+      .skills-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .skill-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.1rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 1.3rem 2.4rem rgba(0, 0, 0, 0.5);
+    }
+    .skill-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.9rem;
+    }
+    .skill-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 0.9rem;
+      background: rgba(229, 9, 20, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+    }
+    .skill-title {
+      font-weight: 600;
+      font-size: 0.98rem;
+    }
+    .skill-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+    .skill-tag {
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+    }
+    /* ---------- LEARNING BANNER ---------- */
+    .learning-banner {
+      margin-top: 3rem;
+      background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(229, 9, 20, 0.02));
+      border-radius: var(--radius-lg);
+      padding: 1.7rem 1.6rem;
+      border: 1px solid rgba(229, 9, 20, 0.4);
+      text-align: center;
+      box-shadow: 0 1.6rem 3rem rgba(0, 0, 0, 0.7);
+    }
+    .learning-icon {
+      font-size: 1.8rem;
+      margin-bottom: 0.4rem;
+      color: var(--accent);
+    }
+    .learning-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }
+    .learning-text {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      max-width: 620px;
+      margin: 0 auto;
+    }
+    /* ---------- CONTACT SECTION ---------- */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1.6rem;
+      margin-bottom: 2.2rem;
+    }
+    @media (max-width: 960px) {
+      .contact-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+    @media (max-width: 640px) {
+      .contact-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    .contact-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-md);
+      padding: 1.2rem 1.1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+    .contact-card-title {
+      font-weight: 600;
+      margin-bottom: 0.3rem;
+      color: var(--text-main);
+    }
+    .contact-highlight-box {
+      background: linear-gradient(135deg, #e50914, #f97316);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.7rem;
+      text-align: center;
+      color: var(--text-main);
+      box-shadow: 0 1.8rem 3.2rem rgba(0, 0, 0, 0.8);
+    }
+    .contact-highlight-title {
+      font-size: 1.6rem;
+      font-weight: 700;
+      margin-bottom: 0.6rem;
+    }
+    .contact-highlight-text {
+      font-size: 0.96rem;
+      margin-bottom: 1.4rem;
+    }
+    .btn-white {
+      background: #ffffff;
+      color: #111827;
+      border-radius: 999px;
+      padding: 0.75rem 1.6rem;
+      border: none;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .btn-white:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 1.1rem 2.2rem rgba(0, 0, 0, 0.45);
+    }
+    /* ---------- FOOTER ---------- */
+    .footer {
+      background: #050507;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 2.3rem 0 1.6rem;
+      margin-top: 3rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1.8fr 1.2fr 1.2fr;
+      gap: 2rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+    @media (max-width: 900px) {
+      .footer-top {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .footer-top {
+        grid-template-columns: 1fr;
+      }
+    }
+    .footer-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+    .footer-brand-title {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-size: 0.9rem;
+    }
+    .footer-socials {
+      display: flex;
+      gap: 0.6rem;
+      font-size: 1rem;
+    }
+    .footer-social {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease;
+    }
+    .footer-social:hover {
+      background: rgba(255, 255, 255, 0.12);
+      border-color: var(--accent);
+      transform: translateY(-1px);
+    }
+    .footer-heading {
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text-main);
+      font-size: 0.9rem;
+    }
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.28rem;
+      font-size: 0.85rem;
+    }
+    .footer-bottom {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    /* ---------- FLOATING CHAT BUTTON ---------- */
+    .chat-bubble {
+      position: fixed;
+      right: 1.4rem;
+      bottom: 1.4rem;
+      z-index: 40;
+    }
+    .chat-button {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #000000;
+      color: #ffffff;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      cursor: pointer;
+      box-shadow: 0 1.3rem 2.4rem rgba(0, 0, 0, 0.7);
+    }
+    .chat-dot {
+      width: 26px;
+      height: 26px;
+      border-radius: 999px;
+      background: #e50914;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.95rem;
+    }
+    @media (max-width: 640px) {
+      .chat-button span:last-child {
+        display: none; /* show only icon text "Talk" on small screens if needed */
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <div class="brand">
+        <div class="brand-logo"></div>
+        <span>ROMAN</span><span>RAUT</span>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero">Home</a>
+        <a href="#projects">Projects</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+  <!-- HERO -->
+  <section id="hero" class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-kicker">CSIT • AI & ML EXPLORER</div>
+          <h1 class="hero-title">ROMAN RAUT</h1>
+          <div class="hero-role">CSIT Student <span>|</span> AI &amp; ML Explorer</div>
+          <p class="hero-description">
+            Building the future, one algorithm at a time. Exploring the intersection of
+            code and intelligence. A passionate learner diving deep into the world of
+            Artificial Intelligence and Machine Learning, crafting innovative solutions
+            and turning ideas into reality.
+          </p>
+          <div class="hero-actions">
+            <a href="#projects"><button class="btn btn-primary">View Projects</button></a>
+            <a href="#about"><button class="btn btn-outline">About Me</button></a>
+          </div>
+          <div class="hero-scroll">⌄</div>
+        </div>
+        <aside class="hero-card">
+          <div class="hero-card-inner">
+            <div class="hero-card-top">
+              <div class="hero-avatar">RR</div>
+              <div>
+                <div class="hero-card-name">Roman Raut</div>
+                <div class="hero-card-role">CSIT • AI &amp; ML Enthusiast</div>
+              </div>
+            </div>
+            
+              <div class="hero-photo-wrapper">
+               <img src="final.png" alt="Roman Raut" class="hero-photo">
+        
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <!-- PROJECTS -->
+  <section id="projects" class="section">
+    <div class="container">
+      <h2 class="section-title">Featured <span>Projects</span></h2>
+      <p class="section-subtitle">
+        Explore my journey through code, AI, and machine learning. Each project
+        represents a step forward in my learning adventure.
+      </p>
+      <div class="projects-grid">
+        <!-- Project 1 -->
+              <!-- Numerical Methods Lab (from GitHub) -->
+      <article class="project-card">
+        <div class="project-image-wrapper">
+          <!-- For now, using a placeholder image. Later you can replace with your own screenshot -->
+          <img
+            class="project-image"
+            src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+            alt="Numerical Methods Lab in C"
+          />
+          <div class="project-badge">GITHUB</div>
+        </div>
+        <div class="project-body">
+          <div class="project-header">
+            <h3 class="project-title">Numerical Methods Lab</h3>
+            <span class="project-year">CSIT</span>
+          </div>
+          <p class="project-description">
+            Collection of C programs for Numerical Methods lab: solving equations,
+            performing iterations, and exploring core numerical techniques as part of the BSc CSIT course.
+          </p>
+          <div class="project-tags">
+            <span class="project-tag">C</span>
+            <span class="project-tag">Numerical Methods</span>
+            <span class="project-tag">CSIT Lab</span>
+          </div>
+          <div class="project-links">
+            
+              href="https://github.com/meromanraut/Numerical-Method-Lab"
+              target="_blank"
+              class="project-link"
+            >
+              View on GitHub →
+            </a>
+          </div>
+        </div>
+      </article>
+        <!-- Project 2 -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img
+              class="project-image"
+              src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1200&q=80"
+              alt="ML playground"
+            />
+            <div class="project-badge">NEW</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">ML Basics Playground</h3>
+              <span class="project-year">2025</span>
+            </div>
+            <p class="project-description">
+              Interactive platform to experiment with fundamental machine learning concepts
+              like regression, classification, and clustering.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">JavaScript</span>
+              <span class="project-tag">Python</span>
+              <span class="project-tag">Scikit-learn</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project 3 -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img
+              class="project-image"
+              src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=1200&q=80"
+              alt="Dashboard"
+            />
+            <div class="project-badge">LAB</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">CSIT Lab Tracker</h3>
+              <span class="project-year">2024</span>
+            </div>
+            <p class="project-description">
+              Manage and track computer science lab assignments, deadlines, and progress in
+              one clean dashboard.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">React</span>
+              <span class="project-tag">Node.js</span>
+              <span class="project-tag">MongoDB</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project 4 -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img
+              class="project-image"
+              src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80"
+              alt="Algorithms"
+            />
+            <div class="project-badge">PRACTICE</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">Algorithm Visualizer</h3>
+              <span class="project-year">2024</span>
+            </div>
+            <p class="project-description">
+              Visualize sorting, searching, and graph algorithms step-by-step to better
+              understand how they work under the hood.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">HTML/CSS</span>
+              <span class="project-tag">JavaScript</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project 5 -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img
+              class="project-image"
+              src="https://images.unsplash.com/photo-1523475472560-d2df97ec485c?auto=format&fit=crop&w=1200&q=80"
+              alt="Study dashboard"
+            />
+            <div class="project-badge">PERSONAL</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">Study Progress Dashboard</h3>
+              <span class="project-year">2025</span>
+            </div>
+            <p class="project-description">
+              A simple dashboard to track daily coding time, topics covered, and upcoming
+              learning goals.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">HTML/CSS</span>
+              <span class="project-tag">Charts</span>
+            </div>
+          </div>
+        </article>
+        <!-- Project 6 -->
+        <article class="project-card">
+          <div class="project-image-wrapper">
+            <img
+              class="project-image"
+              src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=1200&q=80"
+              alt="Chatbot"
+            />
+            <div class="project-badge">IDEA</div>
+          </div>
+          <div class="project-body">
+            <div class="project-header">
+              <h3 class="project-title">AI Study Buddy (Concept)</h3>
+              <span class="project-year">Soon</span>
+            </div>
+            <p class="project-description">
+              Concept for a chatbot that helps CSIT students revise concepts, solve doubts,
+              and generate practice questions.
+            </p>
+            <div class="project-tags">
+              <span class="project-tag">AI</span>
+              <span class="project-tag">Prompting</span>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title">About <span>Me</span></h2>
+      <div class="about-grid">
+        <div class="about-image-wrapper">
+          <!-- Replace this with your real photo later -->
+          <img
+            src="https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=1200&q=80"
+            alt="Roman Raut at computer"
+          />
+        </div>
+        <div>
+          <p class="about-text">
+            Hi! I'm <strong>Roman Raut</strong>, a passionate CSIT student on an exciting
+            journey into the world of technology. My curiosity for computers started early,
+            and now I'm diving deeper into the realms of
+            <strong>Artificial Intelligence</strong> and <strong>Machine Learning</strong>.
+          </p>
+          <p class="about-text">
+            As a beginner in this vast field, every day brings new challenges and new
+            discoveries. I believe in learning by doing, which is why I focus on building
+            small projects that help me understand complex concepts. From simple algorithms
+            to AI-powered applications, each project is a stepping stone in my learning
+            adventure.
+          </p>
+          <p class="about-text">
+            What drives me is the endless potential of AI to transform our world.
+            I'm constantly exploring new technologies, experimenting with code, and pushing
+            my boundaries. My goal is to contribute to innovative solutions that make a real
+            difference.
+          </p>
+          <div class="about-stats-row">
+            <div class="about-stat-card">
+              <div class="about-stat-number">2+</div>
+              <div class="about-stat-label">Years Learning</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-number">10+</div>
+              <div class="about-stat-label">Projects Built</div>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-number">∞</div>
+              <div class="about-stat-label">Ideas to Explore</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- SKILLS -->
+  <section id="skills" class="section">
+    <div class="container">
+      <h2 class="section-title">My <span>Skills</span></h2>
+      <p class="section-subtitle">
+        A growing toolkit of technologies and abilities that I'm continuously expanding
+        through learning and practice.
+      </p>
+      <div class="skills-grid">
+        <!-- Programming -->
+        <article class="skill-card">
+          <div class="skill-header">
+            <div class="skill-icon">🧑‍💻</div>
+            <div class="skill-title">Programming Languages</div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Java</span>
+            <span class="skill-tag">C</span>
+            <span class="skill-tag">Python</span>
+            <span class="skill-tag">JavaScript</span>
+            <span class="skill-tag">HTML/CSS</span>
+            <span class="skill-tag">SQL (Basics)</span>
+          </div>
+        </article>
+        <!-- Tools -->
+        <article class="skill-card">
+          <div class="skill-header">
+            <div class="skill-icon">🛠</div>
+            <div class="skill-title">Tools &amp; Technologies</div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">VS Code</span>
+            <span class="skill-tag">Git</span>
+            <span class="skill-tag">GitHub</span>
+            <span class="skill-tag">Linux Basics</span>
+            <span class="skill-tag">React (Learning)</span>
+            <span class="skill-tag">TensorFlow (Basics)</span>
+          </div>
+        </article>
+        <!-- Soft Skills -->
+        <article class="skill-card">
+          <div class="skill-header">
+            <div class="skill-icon">💡</div>
+            <div class="skill-title">Soft Skills</div>
+          </div>
+          <div class="skill-tags">
+            <span class="skill-tag">Problem Solving</span>
+            <span class="skill-tag">Curiosity</span>
+            <span class="skill-tag">Self Learning</span>
+            <span class="skill-tag">Team Collaboration</span>
+            <span class="skill-tag">Adaptability</span>
+            <span class="skill-tag">Critical Thinking</span>
+          </div>
+        </article>
+      </div>
+      <div class="learning-banner">
+        <div class="learning-icon">🚀</div>
+        <div class="learning-title">Always Learning, Always Growing</div>
+        <p class="learning-text">
+          This is just the beginning. I'm committed to continuous learning and staying
+          updated with the latest technologies in AI, ML, and software development. Every
+          day is an opportunity to learn something new and build something amazing.
+        </p>
+      </div>
+    </div>
+  </section>
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="container">
+      <h2 class="section-title">Get In <span>Touch</span></h2>
+      <p class="section-subtitle">
+        I'm always open to discussing new projects, ideas, or opportunities to learn
+        and collaborate. Let's connect!
+      </p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <div class="contact-card-title">Email</div>
+          <div>roman.raut@example.com</div> <!-- TODO: put your real email -->
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-title">GitHub</div>
+          <div>@romanraut</div> <!-- TODO: put your real GitHub -->
+        </div>
+        <div class="contact-card">
+          <div class="contact-card-title">LinkedIn</div>
+          <div>Roman Raut</div> <!-- TODO: put your real LinkedIn -->
+        </div>
+      </div>
+      <div class="contact-highlight-box">
+        <div class="contact-highlight-title">Let's Build Something Amazing Together</div>
+        <p class="contact-highlight-text">
+          Whether you have a project in mind, need help with AI/ML concepts, or just want
+          to talk about technology, I'd love to hear from you.
+        </p>
+        <a href="mailto:roman.raut@example.com">
+          <button class="btn-white">Send Me an Email</button>
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="footer-brand-title">
+            <div class="brand-logo"></div>
+            <span>ROMAN</span><span>RAUT</span>
+          </div>
+          <p>
+            CSIT student passionate about AI and Machine Learning. Building the future,
+            one algorithm at a time.
+          </p>
+          <div class="footer-socials">
+            <!-- replace # with your real links -->
+            <a href="#" class="footer-social" aria-label="GitHub">🐱</a>
+            <a href="#" class="footer-social" aria-label="LinkedIn">in</a>
+            <a href="#" class="footer-social" aria-label="X / Twitter">𝕏</a>
+            <a href="mailto:roman.raut@example.com" class="footer-social" aria-label="Email">✉️</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Quick Links</div>
+          <div class="footer-links">
+            <a href="#hero">Home</a>
+            <a href="#projects">Projects</a>
+            <a href="#about">About</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+          </div>
+        </div>
+        <div>
+          <div class="footer-heading">Get In Touch</div>
+          <div class="footer-links">
+            <span>roman.raut@example.com</span>
+            <span>github.com/romanraut</span>
+            <span>linkedin.com/in/romanraut</span>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 Roman Raut. All rights reserved.</span>
+        <span>Built with HTML &amp; CSS.</span>
+      </div>
+    </div>
+  </footer>
+  <!-- Floating chat-style button (no real chat, just design) -->
+  <div class="chat-bubble">
+    <button class="chat-button">
+      <div class="chat-dot">💬</div>
+      <span>Talk with Me</span>
+    </button>
+  </div>
+</body>
+</html>
+" this is the protfoli i made i want u to make it better and improved one and like something when i click project i will get to the next page , simialar to the others thing or something like view all wheere we get to the new page
